@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Calendar</title>
+    <link rel="icon" type="image/png" href="asset/favicon.png">
+
+    <style>
+        body {
+            transition: opacity ease-in 0.2s;
+        }
+
+        body[unresolved] {
+            opacity: 0;
+            display: block;
+            overflow: hidden;
+            position: relative;
+        }
+
+        iframe {
+            border: solid 1px #777;
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body unresolved>
+
+    <iframe id="calendarFrame" frameborder="0" scrolling="no"></iframe>
+
+    <script>
+        const calendarBaseURL = "https://calendar.google.com/calendar/embed?";
+        const searchParams = new URLSearchParams(window.location.search);
+        const calendarParams = new URLSearchParams({
+            height: 600,
+            wkst: 1,
+            ctz: "Asia/Taipei",
+            showPrint: 0,
+            showTitle: 0,
+            showDate: 0,
+            showNav: 0,
+            showCalendars: 0,
+            showTabs: 0,
+            mode: "WEEK"
+        });
+
+        const calendars = {{CALENDAR_SOURCES}};
+
+        const defaultColor = "%23A1B3FF";
+
+        const parseDatesRange = (value) => {
+            if (!value) return null;
+            const match = /^(\d{8})\/(\d{8})$/.exec(value);
+            if (!match) return null;
+            const [, start, end] = match;
+
+            // Basic validation to ensure chronological order.
+            if (start > end) return null;
+
+            return `${start}/${end}`;
+        };
+
+        const datesFromQuery = parseDatesRange(searchParams.get("dates"));
+        if (datesFromQuery) {
+            calendarParams.set("dates", datesFromQuery);
+        }
+
+        const defaultMode = "WEEK";
+        const allowedModes = new Set(["MONTH", "WEEK", "AGENDA"]);
+        const requestedMode = searchParams.get("mode");
+        if (requestedMode) {
+            const normalizedMode = requestedMode.toUpperCase();
+            if (allowedModes.has(normalizedMode)) {
+                calendarParams.set("mode", normalizedMode);
+            } else {
+                calendarParams.set("mode", defaultMode);
+            }
+        }
+
+        calendars.forEach(calendar => {
+            calendarParams.append("src", calendar);
+            calendarParams.append("color", defaultColor);
+        });
+
+        document.getElementById("calendarFrame").src = calendarBaseURL + calendarParams.toString();
+
+        window.onload = () => document.body.removeAttribute('unresolved');
+    </script>
+
+</body>
+
+</html>
+
