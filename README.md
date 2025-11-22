@@ -89,34 +89,6 @@ npm install -g @dytsou/calendar-build
 pnpm install -g @dytsou/calendar-build
 ```
 
-## Publishing
-
-The package is automatically published to **both registries** when the version is updated:
-
-- The workflow detects version changes in `package.json`
-- Publishes to npmjs.com and GitHub Packages simultaneously
-- Creates a GitHub release after successful publish
-
-**To publish a new version:**
-1. Update the `version` field in `package.json` (e.g., `1.0.5` → `1.0.6`)
-2. Commit and push to `main` branch
-3. The workflow will automatically publish to both registries and create a release
-
-## GitHub Pages Deployment
-
-The project includes a GitHub Actions workflow that automatically deploys to GitHub Pages on push to the `main` branch.
-
-### Setting up GitHub Secrets
-
-1. Go to your repository settings
-2. Navigate to **Secrets and variables** → **Actions**
-3. Add a new secret named `CALENDAR_SOURCES` with your comma-separated calendar IDs
-
-The workflow will automatically:
-- Create the `.env` file from the secret
-- Build the HTML file
-- Deploy to GitHub Pages
-
 ## Development
 
 - `index.html.template` - Template file with placeholder for calendar sources
