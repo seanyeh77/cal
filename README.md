@@ -96,3 +96,6 @@ pnpm install -g @dytsou/calendar-build
 - `.env` - Local environment file (not committed to git)
 - `.env.example` - Example environment file template
 
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
