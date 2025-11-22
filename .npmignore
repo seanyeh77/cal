@@ -1,0 +1,28 @@
+# Environment files
+.env
+.env.example
+
+# Built files
+index.html
+
+# Git files
+.git/
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Dependencies (shouldn't be needed since we have no dependencies, but just in case)
+node_modules/
+
+# API directory (if it shouldn't be published)
+api/
+

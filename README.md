@@ -16,10 +16,41 @@ A simple calendar application that displays multiple Google Calendars in a singl
 
 3. Build the HTML file:
    ```bash
+   # Option 1: Using npm/pnpm (after installing)
+   pnpm install
+   pnpm run build
+   # or use the global command if installed globally
+   calendar-build
+   
+   # Option 2: Direct execution
    node build.js
    ```
 
 4. Open `index.html` in your browser.
+
+## Install as npm package
+
+You can install this package locally or globally:
+
+### Local installation
+```bash
+pnpm install
+```
+
+Then use:
+```bash
+pnpm run build
+```
+
+### Global installation
+```bash
+pnpm install -g
+```
+
+Then use anywhere:
+```bash
+calendar-build
+```
 
 ## GitHub Pages Deployment
 

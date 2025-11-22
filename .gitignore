@@ -4,6 +4,9 @@
 # Built files (optional - uncomment if you want to ignore built index.html)
 index.html
 
+# Dependencies
+node_modules/
+
 # OS files
 .DS_Store
 Thumbs.db
@@ -14,4 +17,5 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
 

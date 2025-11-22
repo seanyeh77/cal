@@ -1,0 +1,35 @@
+{
+  "name": "calendar-build",
+  "version": "1.0.0",
+  "description": "Build script for calendar HTML from template and environment variables",
+  "main": "build.js",
+  "bin": {
+    "calendar-build": "./build.js"
+  },
+  "files": [
+    "build.js",
+    "index.html.template",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": [
+    "calendar",
+    "build",
+    "template"
+  ],
+  "author": "dytsou",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dytsou/cal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dytsou/cal/issues"
+  },
+  "homepage": "https://github.com/dytsou/cal#readme",
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}
