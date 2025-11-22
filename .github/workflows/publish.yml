@@ -53,9 +53,37 @@ jobs:
 
       - name: Publish to npm
         if: steps.check-version.outputs.exists == 'false'
+        id: publish
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        if: steps.check-version.outputs.exists == 'false' && steps.publish.outcome == 'success'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.package-version.outputs.version }}
+          name: Release v${{ steps.package-version.outputs.version }}
+          body: |
+            ## calendar-build@${{ steps.package-version.outputs.version }}
+
+            Published to npm: https://www.npmjs.com/package/calendar-build
+
+            ### Installation
+            ```bash
+            npm install -g calendar-build
+            # or
+            pnpm install -g calendar-build
+            ```
+
+            ### Usage
+            ```bash
+            calendar-build
+            ```
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish skipped
         if: steps.check-version.outputs.exists == 'true'
