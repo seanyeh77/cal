@@ -1,10 +1,10 @@
 {
   "name": "calendar-build",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Build script for calendar HTML from template and environment variables",
   "main": "build.js",
   "bin": {
-    "calendar-build": "./build.js"
+    "calendar-build": "build.js"
   },
   "files": [
     "build.js",
