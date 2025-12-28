@@ -151,16 +151,16 @@ async function decryptFernetUrl(fernetUrl, secretKey) {
 
 /**
  * Sanitize response body to hide calendar URLs in error messages
+ * Only sanitizes HTML and JSON responses to avoid breaking JavaScript code
  */
 async function sanitizeResponse(response) {
   const contentType = response.headers.get('content-type') || '';
   
-  // Only sanitize text-based responses
+  // Only sanitize HTML and JSON responses (error messages)
+  // Skip JavaScript files to avoid breaking code
   if (!contentType.includes('text/html') && 
-      !contentType.includes('application/json') && 
-      !contentType.includes('text/javascript') &&
-      !contentType.includes('application/javascript')) {
-    // For non-text responses, just add CORS header and return
+      !contentType.includes('application/json')) {
+    // For non-HTML/JSON responses (including JavaScript), just add CORS header and return
     const responseHeaders = new Headers(response.headers);
     responseHeaders.set('Access-Control-Allow-Origin', '*');
     return new Response(response.body, {
@@ -173,11 +173,12 @@ async function sanitizeResponse(response) {
   const body = await response.text();
   
   // Patterns to detect and sanitize calendar URLs
+  // Only match complete URLs, not code fragments
   const urlPatterns = [
     /https?:\/\/[^\s"']+\.ics/gi,
     /https?:\/\/calendar\.google\.com\/calendar\/ical\/[^\s"']+/gi,
-    /%40[^\s"']+/gi, // URL-encoded @ symbols
-    /@[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/gi, // Email patterns in URLs
+    // Only match %40 when it's part of a URL (followed by domain-like pattern)
+    /%40[a-zA-Z0-9._-]+\.[a-zA-Z]{2,}[^\s"']*/gi,
   ];
   
   let sanitizedBody = body;
