@@ -72,6 +72,10 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             }
         }
         
+        // Determine the theme based on browser preference
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const selectedTheme = prefersDark ? 'dark' : 'light';
+        
         // Parse and validate date parameter (YYYYMMDD format)
         let selectedDate = null;
         if (requestedDate) {
@@ -96,13 +100,15 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             params: {
                 controls: '',
                 menu: 'false',
-                css: '.dhx_scale_holder_now, .dhx_now .dhx_month_head, .dhx_now .dhx_month_body { background-color: #000000;}.dhx_month_body, .dhx_month_head, .dhx_cal_container { background-color: #000000; }.dhx_cal_navline, .dhx_cal_navline div, button[aria-label*="menu"], button[aria-label*="Menu"], .menu-button, [class*="menu"], [class*="hamburger"] { display: none !important; }',
+                css: selectedTheme === 'dark' 
+                    ? '.dhx_scale_holder_now, .dhx_now .dhx_month_head, .dhx_now .dhx_month_body { background-color: #000000;}.dhx_month_body, .dhx_month_head, .dhx_cal_container { background-color: #000000; }.dhx_cal_navline, .dhx_cal_navline div, button[aria-label*="menu"], button[aria-label*="Menu"], .menu-button, [class*="menu"], [class*="hamburger"] { display: none !important; }'
+                    : '.dhx_cal_navline, .dhx_cal_navline div, button[aria-label*="menu"], button[aria-label*="Menu"], .menu-button, [class*="menu"], [class*="hamburger"] { display: none !important; }',
                 event_url_geo: 'https://www.google.com/maps/@{lat},{lon},{zoom}z',
                 event_url_location: 'https://www.google.com/maps/search/{location}',
                 menu_shows_calendar_names: 'false',
                 menu_shows_description: 'false',
                 menu_shows_title: 'false',
-                skin: 'dark',
+                skin: selectedTheme,
                 start_of_week: 'su',
                 'style-event-status-cancelled': 'true',
                 'style-event-status-confirmed': 'true',

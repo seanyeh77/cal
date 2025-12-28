@@ -55,6 +55,8 @@ The calendar supports URL parameters for navigation:
 - **`?mode=day`** - Show day view
 - **`?date=YYYYMMDD`** - Navigate to a specific date (e.g., `?date=20250115`)
 
+**Theme:** The calendar automatically uses your browser's color scheme preference (dark or light mode).
+
 **Examples:**
 
 - `index.html?mode=month` - Month view
