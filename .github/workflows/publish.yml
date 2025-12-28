@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'package.json'
-      - 'build.js'
+      - 'scripts/build.js'
       - 'index.html.template'
   release:
     types: [created]

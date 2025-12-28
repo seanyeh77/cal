@@ -41,7 +41,7 @@ A simple calendar application that displays multiple calendar feeds using Open W
    calendar-build
 
    # Option 2: Direct execution
-   node build.js
+   node scripts/build.js
    ```
 
 4. Open `index.html` in your browser.
@@ -139,7 +139,8 @@ pnpm install -g @dytsou/calendar-build
 ### Project Structure
 
 - `index.html.template` - Template file with placeholders for calendar URLs
-- `build.js` - Build script that injects calendar URLs from `.env` and updates year in LICENSE
+- `scripts/build.js` - Build script that injects calendar URLs from `.env` and updates year in LICENSE
+- `scripts/encrypt-urls.js` - Helper script to encrypt calendar URLs using Fernet
 - `.env` - Local environment file (not committed to git)
 - `.env.example` - Example environment file template
 

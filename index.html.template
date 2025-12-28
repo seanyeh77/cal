@@ -110,8 +110,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         }
         
         // Calendar configuration
+        // Use Cloudflare Worker to decrypt fernet:// URLs server-side
+        // IMPORTANT: Must use /calendar.html so document.location.pathname is correct
+        // The calendar.js uses pathname.replace(/.html$/, ".json") for API calls
         const calendarConfig = {
-            baseUrl: 'https://open-web-calendar.hosted.quelltext.eu/calendar.html',
+            baseUrl: '{{WORKER_URL}}/calendar.html',
             params: {
                 controls: '',
                 menu: 'false',
@@ -142,6 +145,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         }
 
         // Build calendar URL
+        // Note: fernet:// URLs are passed directly to Cloudflare Worker
+        // The worker decrypts them server-side before forwarding to open-web-calendar
         const buildCalendarUrl = (config) => {
             const url = new URL(config.baseUrl);
             
@@ -152,9 +157,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 }
             });
             
-            // Add multiple calendar URLs (open-web-calendar supports multiple url parameters)
-            config.calendarUrls.forEach(calendarUrl => {
-                url.searchParams.append('url', calendarUrl);
+            // Add fernet:// URLs directly - Cloudflare Worker will decrypt them server-side
+            // This keeps the URLs encrypted in the iframe src (visible in developer tools)
+            config.calendarUrls.forEach(fernetUrl => {
+                // Pass fernet:// URLs directly to the worker
+                // The worker will decrypt them before forwarding to open-web-calendar
+                url.searchParams.append('url', fernetUrl);
             });
             
             return url.toString();
