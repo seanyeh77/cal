@@ -73,7 +73,26 @@ if (hasPlaceholders) {
   console.log('✓ Built index.html from template (no placeholders to replace)');
 }
 
+// Get current year for placeholders
+const currentYear = new Date().getFullYear().toString();
+
+// Replace {{YEAR}} placeholder in HTML template
+if (html.includes('{{YEAR}}')) {
+  html = html.replace(/\{\{YEAR\}\}/g, currentYear);
+}
+
 // Write built HTML
 const outputPath = path.join(__dirname, 'index.html');
 fs.writeFileSync(outputPath, html, 'utf-8');
+
+// Update LICENSE file with current year
+const licensePath = path.join(__dirname, 'LICENSE');
+if (fs.existsSync(licensePath)) {
+  let licenseContent = fs.readFileSync(licensePath, 'utf-8');
+  if (licenseContent.includes('{{YEAR}}')) {
+    licenseContent = licenseContent.replace(/\{\{YEAR\}\}/g, currentYear);
+    fs.writeFileSync(licensePath, licenseContent, 'utf-8');
+    console.log(`✓ Updated LICENSE with year ${currentYear}`);
+  }
+}
 
