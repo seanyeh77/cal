@@ -23,12 +23,21 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Create test .env file
         run: |
           echo "CALENDAR_URL=https://calendar.google.com/calendar/ical/test1%40example.com/public/basic.ics,https://calendar.google.com/calendar/ical/test2%40example.com/public/basic.ics" > .env
+          # Don't set ENCRYPTION_METHOD so URLs are not encrypted for testing
 
       - name: Run build
-        run: npm run build
+        run: pnpm run build
 
       - name: Verify build output
         run: |
@@ -36,8 +45,20 @@ jobs:
             echo "Error: index.html was not generated"
             exit 1
           fi
-          if ! grep -q "test1@example.com" index.html; then
+          # Check if calendarUrls configuration exists
+          if ! grep -q "calendarUrls:" index.html; then
+            echo "Error: calendarUrls configuration not found"
+            exit 1
+          fi
+          # Check if calendar URLs are present (plain URLs since encryption is not enabled)
+          if grep -q "test1%40example.com" index.html; then
+            echo "✓ Calendar URLs were injected correctly (plain format)"
+          elif grep -q "fernet://" index.html; then
+            echo "✓ Calendar URLs were injected correctly (encrypted format)"
+          else
             echo "Error: Calendar URLs were not injected correctly"
+            echo "Checking index.html content..."
+            grep -o "calendarUrls:.*" index.html | head -1 || echo "No calendarUrls found"
             exit 1
           fi
           echo "Build verification passed"
