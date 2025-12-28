@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'package.json'
-      - 'build.js'
+      - 'scripts/build.js'
       - 'index.html.template'
   release:
     types: [created]
@@ -118,21 +118,21 @@ jobs:
           GITHUB_PUBLISHED=false
           NPMJS_SKIPPED=false
           GITHUB_SKIPPED=false
-          
+
           # Check if npmjs was published in this run
           if [ "${{ steps.check-npmjs.outputs.exists }}" == "false" ] && [ "${{ steps.publish-npmjs.outcome }}" == "success" ]; then
             NPMJS_PUBLISHED=true
           elif [ "${{ steps.check-npmjs.outputs.exists }}" == "true" ]; then
             NPMJS_SKIPPED=true
           fi
-          
+
           # Check if GitHub Packages was published in this run
           if [ "${{ steps.check-github.outputs.exists }}" == "false" ] && [ "${{ steps.publish-github.outcome }}" == "success" ]; then
             GITHUB_PUBLISHED=true
           elif [ "${{ steps.check-github.outputs.exists }}" == "true" ]; then
             GITHUB_SKIPPED=true
           fi
-          
+
           # Create release if:
           # 1. Any registry was published in this run, OR
           # 2. GitHub Packages was published (even if npmjs was skipped because it already exists)
@@ -171,7 +171,7 @@ jobs:
             ```
 
             **From GitHub Packages:**
-            
+
             First, create or update your `.npmrc` file:
             ```ini
             @dytsou:registry=https://npm.pkg.github.com
@@ -219,4 +219,3 @@ jobs:
           else
             echo "Skipped - not attempted"
           fi
-

@@ -25,15 +25,28 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Create .env file
         run: |
-          echo "CALENDAR_SOURCES=${{ secrets.CALENDAR_SOURCES }}" > .env
+          {
+            echo "CALENDAR_URL=${{ secrets.CALENDAR_URL }}"
+            [ -n "${{ secrets.ENCRYPTION_METHOD }}" ] && echo "ENCRYPTION_METHOD=${{ secrets.ENCRYPTION_METHOD }}" || echo "ENCRYPTION_METHOD="
+            [ -n "${{ secrets.ENCRYPTION_KEY }}" ] && echo "ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}" || echo "ENCRYPTION_KEY="
+            [ -n "${{ secrets.WORKER_URL }}" ] && echo "WORKER_URL=${{ secrets.WORKER_URL }}" || echo "WORKER_URL="
+          } > .env
 
       - name: Build
         run: |
-          node build.js
+          node scripts/build.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -41,7 +54,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: "."
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,4 +63,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

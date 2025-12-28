@@ -1,0 +1,13 @@
+node_modules
+*.min.js
+*.min.css
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+.DS_Store
+dist
+build
+coverage
+.env
+index.html
+

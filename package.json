@@ -2,17 +2,19 @@
   "name": "@dytsou/calendar-build",
   "version": "1.1.3",
   "description": "Build script for calendar HTML from template and environment variables",
-  "main": "build.js",
+  "main": "scripts/build.js",
   "bin": {
-    "calendar-build": "build.js"
+    "calendar-build": "scripts/build.js"
   },
   "files": [
-    "build.js",
+    "scripts/build.js",
     "index.html.template",
     "README.md"
   ],
   "scripts": {
-    "build": "node build.js"
+    "build": "node scripts/build.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "calendar",
@@ -31,5 +33,14 @@
   "homepage": "https://github.com/dytsou/cal#readme",
   "engines": {
     "node": ">=12.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^17.0.1",
+    "prettier": "^3.7.4",
+    "wrangler": "4.54.0"
+  },
+  "dependencies": {
+    "fernet": "^0.3.3",
+    "glob": "13.0.0"
   }
 }
