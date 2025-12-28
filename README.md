@@ -1,6 +1,14 @@
 # Calendar App
 
-A simple calendar application that displays multiple Google Calendars in a single view.
+A simple calendar application that displays multiple calendar feeds using Open Web Calendar.
+
+## Features
+
+- Display multiple calendar feeds simultaneously
+- Dark theme with customizable styling
+- Full-height responsive design
+- URL parameters for view mode and date selection
+- Clean interface without menu buttons or navigation controls
 
 ## Setup
 
@@ -10,11 +18,18 @@ A simple calendar application that displays multiple Google Calendars in a singl
    cp .env.example .env
    ```
 
-2. Edit `.env` and add your calendar sources (comma-separated):
+2. Edit `.env` and add your calendar URLs (comma-separated):
 
    ```
-   CALENDAR_SOURCES=calendar1,calendar2,calendar3
+   CALENDAR_URL=https://calendar.google.com/calendar/ical/example%40gmail.com/public/basic.ics,https://calendar.google.com/calendar/ical/another%40gmail.com/public/basic.ics
    ```
+
+   **Getting Google Calendar iCal URLs:**
+   - Go to your Google Calendar settings
+   - Find the calendar you want to share
+   - Click "Integrate calendar" or "Get shareable link"
+   - Copy the "Public URL to iCal format" link
+   - URL-encode special characters (e.g., `@` becomes `%40`)
 
 3. Build the HTML file:
 
@@ -30,6 +45,21 @@ A simple calendar application that displays multiple Google Calendars in a singl
    ```
 
 4. Open `index.html` in your browser.
+
+## URL Parameters
+
+The calendar supports URL parameters for navigation:
+
+- **`?mode=month`** - Show month view
+- **`?mode=week`** - Show week view (default)
+- **`?mode=day`** - Show day view
+- **`?date=YYYYMMDD`** - Navigate to a specific date (e.g., `?date=20250115`)
+
+**Examples:**
+
+- `index.html?mode=month` - Month view
+- `index.html?mode=week&date=20250115` - Week view for the week containing January 15, 2025
+- `index.html?mode=day&date=20250320` - Day view for March 20, 2025
 
 ## Install Package
 
@@ -100,10 +130,27 @@ pnpm install -g @dytsou/calendar-build
 
 ## Development
 
-- `index.html.template` - Template file with placeholder for calendar sources
-- `build.js` - Build script that injects calendar sources from `.env`
+### Project Structure
+
+- `index.html.template` - Template file with placeholders for calendar URLs
+- `build.js` - Build script that injects calendar URLs from `.env` and updates year in LICENSE
 - `.env` - Local environment file (not committed to git)
 - `.env.example` - Example environment file template
+
+### Scripts
+
+- `pnpm run build` - Build the HTML file from template
+- `pnpm format` - Format code with Prettier
+- `pnpm format:check` - Check code formatting
+
+### Build Process
+
+The build script:
+
+1. Reads `CALENDAR_URL` from `.env` (supports comma-separated multiple URLs)
+2. Replaces `{{CALENDAR_URLS}}` placeholder in the template
+3. Updates `{{YEAR}}` placeholder with current year in LICENSE and HTML
+4. Generates `index.html` ready for deployment
 
 ## License
 
