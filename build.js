@@ -31,11 +31,17 @@ if (hasPlaceholders) {
   for (const line of envLines) {
     if (line.startsWith('CALENDAR_SOURCES=')) {
       const value = line.substring('CALENDAR_SOURCES='.length).trim();
-      calendarSources = value.split(',').map(s => s.trim()).filter(s => s);
+      calendarSources = value
+        .split(',')
+        .map(s => s.trim())
+        .filter(s => s);
     } else if (line.startsWith('CALENDAR_URL=')) {
       const value = line.substring('CALENDAR_URL='.length).trim();
       // Support both single URL and comma-separated multiple URLs
-      const urls = value.split(',').map(s => s.trim()).filter(s => s);
+      const urls = value
+        .split(',')
+        .map(s => s.trim())
+        .filter(s => s);
       calendarUrls.push(...urls);
     }
   }
@@ -47,12 +53,13 @@ if (hasPlaceholders) {
       process.exit(1);
     }
 
-    const calendarArrayCode = '[\n' + calendarSources
-      .map(cal => `            "${cal}"`)
-      .join(',\n') + '\n        ]';
+    const calendarArrayCode =
+      '[\n' + calendarSources.map(cal => `            "${cal}"`).join(',\n') + '\n        ]';
 
     html = html.replace('{{CALENDAR_SOURCES}}', calendarArrayCode);
-    console.log(`✓ Replaced {{CALENDAR_SOURCES}} with ${calendarSources.length} calendar source(s)`);
+    console.log(
+      `✓ Replaced {{CALENDAR_SOURCES}} with ${calendarSources.length} calendar source(s)`
+    );
   }
 
   // Replace CALENDAR_URLS placeholder
@@ -62,9 +69,8 @@ if (hasPlaceholders) {
       process.exit(1);
     }
 
-    const calendarUrlsArrayCode = '[\n' + calendarUrls
-      .map(url => `            "${url}"`)
-      .join(',\n') + '\n        ]';
+    const calendarUrlsArrayCode =
+      '[\n' + calendarUrls.map(url => `            "${url}"`).join(',\n') + '\n        ]';
 
     html = html.replace('{{CALENDAR_URLS}}', calendarUrlsArrayCode);
     console.log(`✓ Replaced {{CALENDAR_URLS}} with ${calendarUrls.length} calendar URL(s)`);
@@ -95,4 +101,3 @@ if (fs.existsSync(licensePath)) {
     console.log(`✓ Updated LICENSE with year ${currentYear}`);
   }
 }
-

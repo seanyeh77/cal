@@ -5,23 +5,26 @@ A simple calendar application that displays multiple Google Calendars in a singl
 ## Setup
 
 1. Copy `.env.example` to `.env`:
+
    ```bash
    cp .env.example .env
    ```
 
 2. Edit `.env` and add your calendar sources (comma-separated):
+
    ```
    CALENDAR_SOURCES=calendar1,calendar2,calendar3
    ```
 
 3. Build the HTML file:
+
    ```bash
    # Option 1: Using npm/pnpm (after installing)
    pnpm install
    pnpm run build
    # or use the global command if installed globally
    calendar-build
-   
+
    # Option 2: Direct execution
    node build.js
    ```
@@ -38,6 +41,7 @@ This package is published to **both registries**:
 ### Installation from npmjs (Default - Recommended)
 
 **Global installation:**
+
 ```bash
 npm install -g @dytsou/calendar-build
 # or
@@ -45,11 +49,13 @@ pnpm install -g @dytsou/calendar-build
 ```
 
 Then use anywhere:
+
 ```bash
 calendar-build
 ```
 
 **Local installation:**
+
 ```bash
 npm install @dytsou/calendar-build
 # or
@@ -57,6 +63,7 @@ pnpm install @dytsou/calendar-build
 ```
 
 Then use:
+
 ```bash
 npx calendar-build
 # or
@@ -77,12 +84,14 @@ Create or edit `.npmrc` file in your home directory:
 ```
 
 **2. Get your GitHub token:**
+
 1. Go to https://github.com/settings/tokens
 2. Click "Generate new token" → "Generate new token (classic)"
 3. Select `read:packages` permission
 4. Copy the token and replace `YOUR_GITHUB_TOKEN` in `.npmrc`
 
 **3. Install:**
+
 ```bash
 npm install -g @dytsou/calendar-build
 # or

@@ -1,17 +1,15 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "friday"
-      time: "09:00"
-      timezone: "UTC"
+      interval: 'weekly'
+      day: 'friday'
+      time: '09:00'
     open-pull-requests-limit: 10
     labels:
-      - "dependencies"
+      - 'dependencies'
     commit-message:
-      prefix: "chore"
-      prefix-development: "chore"
-      include: "scope"
-
+      prefix: 'chore'
+      prefix-development: 'chore'
+      include: 'scope'

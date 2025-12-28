@@ -12,7 +12,9 @@
     "README.md"
   ],
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "calendar",
@@ -31,5 +33,8 @@
   "homepage": "https://github.com/dytsou/cal#readme",
   "engines": {
     "node": ">=12.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4"
   }
 }
