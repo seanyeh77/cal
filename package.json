@@ -1,6 +1,6 @@
 {
   "name": "@dytsou/calendar-build",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Build script for calendar HTML from template and environment variables",
   "main": "scripts/build.js",
   "bin": {
@@ -8,8 +8,12 @@
   },
   "files": [
     "scripts/build.js",
+    "scripts/encrypt-urls.js",
+    "worker.js",
+    "wrangler.toml.example",
     "index.html.template",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "node scripts/build.js",
